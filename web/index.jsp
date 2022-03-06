@@ -1,4 +1,16 @@
 <!doctype html>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+
+<sql:setDataSource 
+    var="con"
+    driver="com.mysql.jdbc.Driver"
+    user="root"
+    password=""
+    url="jdbc:mysql://localhost/alfacursos" />
+<sql:query var="res" dataSource="${con}">
+    select * from cursos
+</sql:query>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -60,70 +72,36 @@
       </nav>
     </div>
 
-    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-      <h1 class="display-4 fw-normal">Pricing</h1>
-      <p class="fs-5 text-muted">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It?s built with default Bootstrap components and utilities with little customization.</p>
-    </div>
+   
   </header>
 
   <main>
-      
+       <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+      <h1 class="display-4 fw-normal">Pricing</h1>
+      <p class="fs-5 text-muted">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It?s built with default Bootstrap components and utilities with little customization.</p>
+    </div>
     <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-      <div class="col">
-          
+        <c:forEach items="${res.rows}" var="linha">
+        <div class="col">
         <div class="card mb-4 rounded-3 shadow-sm">
           <div class="card-header py-3">
-            <h4 class="my-0 fw-normal">Curso01</h4>
+            <h4 class="my-0 fw-normal">${linha.nome}</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">$0<small class="text-muted fw-light">/mo</small></h1>
-            <ul class="list-unstyled mt-3 mb-4">
-              <li>10 users included</li>
-              <li>2 GB of storage</li>
-              <li>Email support</li>
-              <li>Help center access</li>
-            </ul>
-            <button type="button" class="w-100 btn btn-lg btn-outline-primary">Sign up for free</button>
+            <h1 class="card-title pricing-card-title">${linha.valor}<small class="text-muted fw-light">/mês</small></h1>
+            <p>
+                ${linha.resumo}
+            </p>
+            <a href="detalhes.jsp?idc=${linha.id}" class="w-100 btn btn-lg btn-outline-primary">Sign up for free</a>
           </div>
         </div>
           
       </div>
-      <div class="col">
-          
-        <div class="card mb-4 rounded-3 shadow-sm">
-          <div class="card-header py-3">
-            <h4 class="my-0 fw-normal">Curso01</h4>
-          </div>
-          <div class="card-body">
-            <h1 class="card-title pricing-card-title">$0<small class="text-muted fw-light">/mo</small></h1>
-            <ul class="list-unstyled mt-3 mb-4">
-              <li>10 users included</li>
-              <li>2 GB of storage</li>
-              <li>Email support</li>
-              <li>Help center access</li>
-            </ul>
-            <button type="button" class="w-100 btn btn-lg btn-outline-primary">Sign up for free</button>
-          </div>
-        </div>
-          
-      </div>
-      <div class="col">
-        <div class="card mb-4 rounded-3 shadow-sm border-primary">
-          <div class="card-header py-3 text-white bg-primary border-primary">
-            <h4 class="my-0 fw-normal">Curso03</h4>
-          </div>
-          <div class="card-body">
-            <h1 class="card-title pricing-card-title">$29<small class="text-muted fw-light">/mo</small></h1>
-            <ul class="list-unstyled mt-3 mb-4">
-              <li>30 users included</li>
-              <li>15 GB of storage</li>
-              <li>Phone and email support</li>
-              <li>Help center access</li>
-            </ul>
-            <button type="button" class="w-100 btn btn-lg btn-primary">Contact us</button>
-          </div>
-        </div>
-      </div>
+        </c:forEach>
+      
+       
+    </div>
+      
     </div>
 
     <h2 class="display-6 text-center mb-4">Compare plans</h2>
@@ -131,6 +109,9 @@
    
   </main>
 
+    
+    
+    
   <footer class="pt-4 my-md-5 pt-md-5 border-top">
     <div class="row">
       <div class="col-12 col-md">
