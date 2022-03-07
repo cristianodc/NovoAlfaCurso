@@ -66,7 +66,7 @@
 
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
         <a class="me-3 py-2 text-dark text-decoration-none" href="#">Destaques</a>
-        <a class="me-3 py-2 text-dark text-decoration-none" href="#">Alguma coisa </a>
+        <a class="me-3 py-2 text-dark text-decoration-none" href="admin/listarcursos.jsp">Admin </a>
         <a class="me-3 py-2 text-dark text-decoration-none" href="#">Entre em contato</a>
         <a class="py-2 text-dark text-decoration-none" href="#">Pricing</a>
       </nav>
@@ -92,7 +92,7 @@
             <p>
                 ${linha.resumo}
             </p>
-            <a href="detalhes.jsp?idc=${linha.id}" class="w-100 btn btn-lg btn-outline-primary">Sign up for free</a>
+             <a href="detalhes.jsp?idc=${linha.id}" class="w-100 btn btn-lg btn-outline-primary">Sign up for free</a>
           </div>
         </div>
           
