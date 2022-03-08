@@ -85,7 +85,7 @@
           
             <c:forEach items="${res.rows}" var="linha">
              <p class="fs-5 text-muted">Tem certeza que deseja excluir o curso <strong>${linha.nome}</strong></p>
-                <form class="form-control" action="exec"method="post">
+             <form class="form-control" action="../exec"method="post">
                     <input type="hidden" name="act" value="delete">
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Id curso</label>

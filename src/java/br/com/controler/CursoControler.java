@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CursoControler extends HttpServlet {
 
-    private Connection con;
+    private Connection conn;
 
     public Connection getConnection() {
         Connection con = null;
@@ -42,6 +43,33 @@ public class CursoControler extends HttpServlet {
         return con;
     }
 
+    public void getConnectionv() {
+        Connection con = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String host = "jdbc:mysql://localhost/alfacursos";
+            String user = "root";
+            String pass = "";
+            this.conn = DriverManager.getConnection(host, user, pass);
+
+        } catch (ClassNotFoundException e) {
+
+            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void init() throws ServletException {
+        
+        getConnectionv();
+       
+       
+    }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -51,9 +79,6 @@ public class CursoControler extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
-      
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -103,25 +128,32 @@ public class CursoControler extends HttpServlet {
         Connection conn = getConnection();
         String act = request.getParameter("act");
         try {
-                if(act.equalsIgnoreCase("insert"))
-                    {
-                        String nome = request.getParameter("nome");
-                        String resm = request.getParameter("resm");
-                        String desc = request.getParameter("desc");
-                        String val = request.getParameter("val");
+            if (act.equalsIgnoreCase("insert")) {
+                String nome = request.getParameter("nome");
+                String resm = request.getParameter("resm");
+                String desc = request.getParameter("desc");
+                String val = request.getParameter("val");
 
-                        String sql = "Insert into cursos(nome,resumo,descricao,valor)"
-                                + "values(?,?,?,?)";
-                        Float valor = Float.parseFloat(val);
-                        PreparedStatement stmt = conn.prepareStatement(sql);
-                        stmt.setString(1, nome);
-                        stmt.setString(2, resm);
-                        stmt.setString(3, desc);
-                        stmt.setFloat(4, valor);
-                        int res = stmt.executeUpdate();
-                        response.sendRedirect("admin/listarcursos.jsp");
-                    }
-                
+                String sql = "Insert into cursos(nome,resumo,descricao,valor)"
+                        + "values(?,?,?,?)";
+                Float valor = Float.parseFloat(val);
+                PreparedStatement stmt =conn.prepareStatement(sql);
+                stmt.setString(1, nome);
+                stmt.setString(2, resm);
+                stmt.setString(3, desc);
+                stmt.setFloat(4, valor);
+                int res = stmt.executeUpdate();
+                stmt.close();
+                conn.close();
+                response.sendRedirect("admin/listarcursos.jsp");
+            } else if (act.equalsIgnoreCase("update")) {
+
+                doPut(request, response);
+            }else if(act.equalsIgnoreCase("delete"))
+                {
+                    doDelete(request, response);
+                }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -129,12 +161,51 @@ public class CursoControler extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+                Connection conn = getConnection();
+                String id = req.getParameter("id");
+                String nome = req.getParameter("nome");
+                String resm = req.getParameter("resm");
+                String desc = req.getParameter("desc");
+                String val = req.getParameter("val");
 
+                String sql = "update cursos set nome=?,resumo=?,descricao=?,valor=?"
+                        + "where id=?";
+                        
+                Float valor = Float.parseFloat(val);
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setString(1, nome);
+                stmt.setString(2, resm);
+                stmt.setString(3, desc);
+                stmt.setFloat(4, valor);
+                stmt.setString(5, id);
+                int res = stmt.executeUpdate();
+                stmt.close();
+                conn.close();
+                resp.sendRedirect("admin/listarcursos.jsp");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
+    {
+            try
+                {
+                    Connection conn = getConnection();
+                    String id = req.getParameter("id");
+                    String sql = "delete from cursos where id=?";
+                    PreparedStatement stmt = conn.prepareStatement(sql);
+                    stmt.setString(1, id);
+                    stmt.executeUpdate();
+                     resp.sendRedirect("admin/listarcursos.jsp");
+                }catch(Exception e)
+                    {
+                        e.printStackTrace();
+                         JOptionPane.showMessageDialog(null, e.getMessage());
+                    }
     }
 
     /**

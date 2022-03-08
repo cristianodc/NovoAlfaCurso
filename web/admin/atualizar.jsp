@@ -85,7 +85,7 @@
             <c:forEach items="${res.rows}" var="linha">
 
 
-                <form class="form-control" action="exec"method="post">
+                <form class="form-control" action="../exec"method="post">
                     <input type="hidden" name="act" value="update">
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Id curso</label>
