@@ -11,6 +11,8 @@
 <sql:query var="res" dataSource="${con}">
     select * from cursos
 </sql:query>
+
+
 <html lang="en">
   <head>
     <meta charset="utf-8">

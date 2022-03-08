@@ -1,16 +1,9 @@
 <!doctype html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+<%@page import="br.com.model.*" %>
+<jsp:useBean class="br.com.model.CursoDao" id="dao" />
 
-<sql:setDataSource 
-    var="con"
-    driver="com.mysql.jdbc.Driver"
-    user="root"
-    password=""
-    url="jdbc:mysql://localhost/alfacursos" />
-<sql:query var="res" dataSource="${con}">
-    select * from cursos
-</sql:query>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -82,7 +75,7 @@
             <a class="me-3 py-2 text-dark text-decoration-none" href="cadastrar.jsp">Cadastrar novo Curso</a>
              <p class="fs-5 text-muted">Lista dos cursos Cadastrados</p>
             <!-- INICIO DA LISTAGEM DOS CURSOS LISTADOS -->
-            <c:forEach items="${res.rows}" var="linha">
+            <c:forEach items="${dao.buscar(2)}" var="linha">
                  <p class="fs-5 text-muted">
                      <a class="me-3 py-2 text-dark text-decoration-none" href="atualizar.jsp?idc=${linha.id}">[A]</a> &raquo;&raquo;
                      <a class="me-3 py-2 text-dark text-decoration-none" href="excluir.jsp?idc=${linha.id}">[X]</a>

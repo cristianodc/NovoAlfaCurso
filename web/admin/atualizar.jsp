@@ -1,8 +1,11 @@
 <!doctype html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+<%@page import="br.com.model.*" %>
+<jsp:useBean class="br.com.model.CursoDao" id="dao" />
 
-<sql:setDataSource 
+<%--
+<!-- <sql:setDataSource 
     var="con"
     driver="com.mysql.jdbc.Driver"
     user="root"
@@ -11,6 +14,7 @@
 <sql:query var="res" dataSource="${con}">
     select * from cursos where id = ${param.idc}
 </sql:query>
+--%>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -82,7 +86,7 @@
             <a class="me-3 py-2 text-dark text-decoration-none" href="#">Cadastrar novo Curso</a>
             <p class="fs-5 text-muted">Lista dos cursos Cadastrados</p>
             <!-- INICIO DA LISTAGEM DOS CURSOS PARA ATUALIZAR -->
-            <c:forEach items="${res.rows}" var="linha">
+            <c:forEach items="${dao.listar(id)}" var="linha">
 
 
                 <form class="form-control" action="../exec"method="post">

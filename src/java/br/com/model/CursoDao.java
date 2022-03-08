@@ -7,6 +7,8 @@ package br.com.model;
 import br.com.util.Util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CursoDao {
@@ -86,7 +88,64 @@ public class CursoDao {
             }
         public List<Curso> listar()
         {
-            return null;
+            ArrayList<Curso> lista = new ArrayList<Curso>();
+            
+            try
+                {
+                    String sql = "Select * from cursos";
+                    PreparedStatement stmt = this.conn.prepareStatement(sql);
+                   ResultSet rset = stmt.executeQuery();
+                   while(rset.next())
+                    {
+                        Curso c = new Curso();
+                        c.setId(rset.getLong("id"));
+                        c.setNome(rset.getString("nome"));
+                        c.setResumo(rset.getString("resumo"));
+                        c.setDescricao(rset.getString("descricao"));
+                        c.setValor(rset.getFloat("valor"));
+                        lista.add(c);
+                    }
+                   stmt.close();
+                   this.conn.close();
+                }catch(Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+            
+            
+            return lista;
+        }
+        
+        public Curso buscar(String id)
+        {
+            Long idL = Long.parseLong(id);
+            Curso curso = null;
+            
+            try
+                {
+                    String sql = "Select * from cursos where id=?";
+                    PreparedStatement stmt = this.conn.prepareStatement(sql);
+                    stmt.setLong(1, idL);
+                   ResultSet rset = stmt.executeQuery();
+                   while(rset.next())
+                    {
+                        curso = new Curso();
+                        curso.setId(rset.getLong("id"));
+                        curso.setNome(rset.getString("nome"));
+                        curso.setResumo(rset.getString("resumo"));
+                        curso.setDescricao(rset.getString("descricao"));
+                        curso.setValor(rset.getFloat("valor"));
+                        
+                    }
+                   stmt.close();
+                   this.conn.close();
+                }catch(Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+            
+            
+            return curso;
         }
     
 }
