@@ -82,23 +82,24 @@
             <a class="me-3 py-2 text-dark text-decoration-none" href="listarcursos.jsp">&raquo; Voltar</a>
             <p class="fs-5 text-muted">CAdastrar Novo Curso</p>
             <!-- INICIO DA LISTAGEM DOS CURSOS PARA ATUALIZAR -->
-            <form class="form-control">
+            <form class="form-control" action="../exec" method="post">
+                <input type="hidden" name="act" value="insert">
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="nome" placeholder="">
+                    <input type="text" class="form-control" id="nome" name="nome"placeholder="">
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">Resumo</label>
-                    <textarea class="form-control" id="res" rows="3"></textarea>
+                    <textarea class="form-control" id="res" rows="3" name="resm"></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">Descrição</label>
-                    <textarea class="form-control" id="descr" rows="3"></textarea>
+                    <textarea class="form-control" id="descr" rows="3" name="desc"></textarea>
                 </div>
 
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Valor</label>
-                    <input type="number" class="form-control" id="val" placeholder="">
+                    <input type="number" class="form-control" id="val"  name="val"placeholder="">
                 </div>
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary">Cadastrar</button>

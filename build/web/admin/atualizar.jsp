@@ -9,7 +9,7 @@
     password=""
     url="jdbc:mysql://localhost/alfacursos" />
 <sql:query var="res" dataSource="${con}">
-    select * from cursos
+    select * from cursos where id = ${param.idc}
 </sql:query>
 <html lang="en">
     <head>
@@ -82,31 +82,39 @@
             <a class="me-3 py-2 text-dark text-decoration-none" href="#">Cadastrar novo Curso</a>
             <p class="fs-5 text-muted">Lista dos cursos Cadastrados</p>
             <!-- INICIO DA LISTAGEM DOS CURSOS PARA ATUALIZAR -->
-            <form class="form-control">
-                <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="nome" placeholder="">
-            </div>
-            <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Resumo</label>
-                <textarea class="form-control" id="res" rows="3"></textarea>
-            </div>
-                 <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Descrição</label>
-                <textarea class="form-control" id="descr" rows="3"></textarea>
-            </div>
-          
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Valor</label>
-                <input type="number" class="form-control" id="val" placeholder="">
-            </div>
-            <div class="mb-3">
-                 <button type="submit" class="btn btn-primary">Cadastrar</button>
-            </div>
-                
-             </form>
+            <c:forEach items="${res.rows}" var="linha">
 
 
+                <form class="form-control" action="exec"method="post">
+                    <input type="hidden" name="act" value="update">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Id curso</label>
+                        <input type="text" class="form-control" id="id" name="id" readonly="readonly" value="${linha.id}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="nome" name="nome" value="${linha.nome}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Resumo</label>
+                        <textarea class="form-control" type="text"  id="res" rows="3" name="resm" >${linha.resumo}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Descrição</label>
+                        <textarea class="form-control" id="descr" rows="3" name="desc">${linha.descricao}</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Valor</label>
+                        <input type="number" class="form-control" id="val" name="val" value="${linha.valor}">
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Atualizar</button>
+                    </div>
+
+                </form>
+
+            </c:forEach>
 
     </div>
 

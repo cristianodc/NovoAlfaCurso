@@ -85,7 +85,7 @@
             <c:forEach items="${res.rows}" var="linha">
                  <p class="fs-5 text-muted">
                      <a class="me-3 py-2 text-dark text-decoration-none" href="atualizar.jsp?idc=${linha.id}">[A]</a> &raquo;&raquo;
-                     <a class="me-3 py-2 text-dark text-decoration-none" href="exec?idc=${linha.id}">[X]</a>
+                     <a class="me-3 py-2 text-dark text-decoration-none" href="excluir.jsp?idc=${linha.id}">[X]</a>
                      ${linha.nome} 
                  </p>
                   
