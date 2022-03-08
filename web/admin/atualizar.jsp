@@ -3,7 +3,20 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@page import="br.com.model.*" %>
 <jsp:useBean class="br.com.model.CursoDao" id="dao" />
-
+ <%
+       CursoDao dao = new CursoDao();
+       Curso c  = dao.buscar(request.getParameter("idc"));
+       Long   idL  = Long.parseLong(request.getParameter("idc"));
+       String nome = c.getNome();
+       String resm = c.getResumo();
+       String desc = c.getDescricao();
+       Float  val  = c.getValor();
+   %>
+   <c:set var="vidc"  value="<%=idL%>" />
+   <c:set var="vnome" value="<%=nome%>" />
+   <c:set var="vresm" value="<%=resm%>" />
+   <c:set var="vdesc" value="<%=desc%>" />
+   <c:set var="vval" value="<%=val%>" />
 <%--
 <!-- <sql:setDataSource 
     var="con"
