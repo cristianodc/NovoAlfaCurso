@@ -135,6 +135,7 @@ public class CursoControler extends HttpServlet {
             } else if (act.equalsIgnoreCase("update")) {
 
                 doPut(request, response);
+                
             }else if(act.equalsIgnoreCase("delete"))
                 {
                     doDelete(request, response);

@@ -2,7 +2,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@page import="br.com.model.*" %>
-<jsp:useBean class="br.com.model.CursoDao" id="dao" />
+
  <%
        CursoDao dao = new CursoDao();
        Curso c  = dao.buscar(request.getParameter("idc"));
@@ -18,15 +18,7 @@
    <c:set var="vdesc" value="<%=desc%>" />
    <c:set var="vval" value="<%=val%>" />
 <%--
-<!-- <sql:setDataSource 
-    var="con"
-    driver="com.mysql.jdbc.Driver"
-    user="root"
-    password=""
-    url="jdbc:mysql://localhost/alfacursos" />
-<sql:query var="res" dataSource="${con}">
-    select * from cursos where id = ${param.idc}
-</sql:query>
+<jsp:useBean class="br.com.model.CursoDao" id="dao" />
 --%>
 <html lang="en">
     <head>
@@ -99,31 +91,31 @@
             <a class="me-3 py-2 text-dark text-decoration-none" href="#">Cadastrar novo Curso</a>
             <p class="fs-5 text-muted">Lista dos cursos Cadastrados</p>
             <!-- INICIO DA LISTAGEM DOS CURSOS PARA ATUALIZAR -->
-            <c:forEach items="${dao.listar(id)}" var="linha">
+           
 
 
                 <form class="form-control" action="../exec"method="post">
                     <input type="hidden" name="act" value="update">
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Id curso</label>
-                        <input type="text" class="form-control" id="id" name="id" readonly="readonly" value="${linha.id}">
+                        <input type="text" class="form-control" id="id" name="id" readonly="readonly" value="${vidc}">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Nome</label>
-                        <input type="text" class="form-control" id="nome" name="nome" value="${linha.nome}">
+                        <input type="text" class="form-control" id="nome" name="nome" value="${vnome}">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Resumo</label>
-                        <textarea class="form-control" type="text"  id="res" rows="3" name="resm" >${linha.resumo}</textarea>
+                        <textarea class="form-control" type="text"  id="res" rows="3" name="resm" >${vresm}</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Descrição</label>
-                        <textarea class="form-control" id="descr" rows="3" name="desc">${linha.descricao}</textarea>
+                        <textarea class="form-control" id="descr" rows="3" name="desc">${vdesc}</textarea>
                     </div>
 
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Valor</label>
-                        <input type="number" class="form-control" id="val" name="val" value="${linha.valor}">
+                        <input type="number" class="form-control" id="val" name="val" value="${vval}">
                     </div>
                     <div class="mb-3">
                         <button type="submit" class="btn btn-primary">Atualizar</button>
@@ -131,7 +123,7 @@
 
                 </form>
 
-            </c:forEach>
+           
 
     </div>
 
